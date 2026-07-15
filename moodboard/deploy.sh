@@ -37,6 +37,11 @@ ONLY_IMAGES=false
 
 for arg in "$@"; do
   case $arg in
+    --all)
+      SKIP_IMAGES=false
+      ONLY_IMAGES=false
+      FORCE_ALL=true
+      ;;
     --skip-build)
       SKIP_BUILD=true
       ;;
@@ -49,7 +54,7 @@ for arg in "$@"; do
   esac
 done
 
-if [[ "$SKIP_IMAGES" == "false" && "$ONLY_IMAGES" == "false" ]]; then
+if [[ "${FORCE_ALL:-false}" == "false" && "$SKIP_IMAGES" == "false" && "$ONLY_IMAGES" == "false" ]]; then
   if [[ -t 0 ]]; then
     echo -e "${BOLD}Would you like to deploy the gallery images?${RESET}"
     read -p "  Upload images? [y/N]: " -n 1 -r

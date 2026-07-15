@@ -71,6 +71,7 @@ const categories = [
   { key: 'temple', label: 'Temples' },
   { key: 'idol', label: 'Idols & Sculptures' },
   { key: 'detail', label: 'Fine Details' },
+  { key: 'social', label: 'Events & Social' },
 ]
 
 // img_001 → img_004: early temple work

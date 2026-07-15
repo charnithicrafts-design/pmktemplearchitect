@@ -27,9 +27,9 @@ export default defineEventHandler(async (event) => {
   }
 
   // Validate category
-  const validCategories = ['temple', 'idol', 'detail']
+  const validCategories = ['temple', 'idol', 'detail', 'social']
   if (!validCategories.includes(category)) {
-    throw createError({ statusCode: 400, statusMessage: 'Invalid category: must be temple, idol, or detail' })
+    throw createError({ statusCode: 400, statusMessage: 'Invalid category: must be temple, idol, detail, or social' })
   }
 
   try {

@@ -79,6 +79,15 @@
               <span class="label">🔍 Fine Stone Details</span>
             </button>
 
+            <button 
+              class="btn-curate btn-social" 
+              :disabled="processing"
+              @click="curate('social')"
+            >
+              <span class="key-hint">4</span>
+              <span class="label">🎉 Events & Social</span>
+            </button>
+
             <div class="separator">or</div>
 
             <button 
@@ -86,7 +95,7 @@
               :disabled="processing"
               @click="curate('skip')"
             >
-              <span class="key-hint">4</span>
+              <span class="key-hint">5</span>
               <span class="label">🗑️ Skip / Delete Image</span>
             </button>
           </div>
@@ -98,7 +107,8 @@
               <div class="shortcut-item"><span>1</span> Temple</div>
               <div class="shortcut-item"><span>2</span> Idol</div>
               <div class="shortcut-item"><span>3</span> Detail</div>
-              <div class="shortcut-item"><span>4</span> / <span>Delete</span> Skip</div>
+              <div class="shortcut-item"><span>4</span> Social</div>
+              <div class="shortcut-item"><span>5</span> / <span>Del</span> Skip</div>
             </div>
           </div>
         </div>
@@ -181,6 +191,9 @@ function handleKeyDown(e) {
       curate('detail')
       break
     case '4':
+      curate('social')
+      break
+    case '5':
     case 'Delete':
     case 'Backspace':
       curate('skip')
@@ -425,6 +438,17 @@ onUnmounted(() => {
   border-color: #14b8a6;
   color: #2dd4bf;
   background: rgba(20,184,166,0.15);
+}
+
+.btn-social:hover {
+  border-color: rgba(249,115,22,0.4);
+  background: rgba(249,115,22,0.05);
+  color: #fed7aa;
+}
+.btn-social:hover .key-hint {
+  border-color: #f97316;
+  color: #fb923c;
+  background: rgba(249,115,22,0.15);
 }
 
 .separator {

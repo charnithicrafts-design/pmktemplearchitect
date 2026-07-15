@@ -2,7 +2,7 @@
   <div>
     <section class="page-hero">
       <div class="page-hero-bg">
-        <img src="/gallery/img_072.jpeg" alt="Services" />
+        <img src="/gallery/img_002.jpeg" alt="Services" />
         <div class="page-hero-overlay" />
       </div>
       <div class="container page-hero-content">

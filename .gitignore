@@ -8,6 +8,9 @@ moodboard/dist/
 moodboard/WhatsApp Image*
 moodboard/WhatsApp Unknown*
 
+# NEVER commit the unzipped raw images folder
+moodboard/public/unzipped_raw/
+
 # ── Deploy secrets ─────────────────────────────────────
 moodboard/.deploy.env
 moodboard/.env

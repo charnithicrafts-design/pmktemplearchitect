@@ -156,6 +156,9 @@ count_files() {
     if [[ "$dname" == "gallery" && "$SKIP_IMAGES" == "true" ]]; then
       recurse=false
     fi
+    if [[ "$dname" == "unzipped_raw" ]]; then
+      recurse=false
+    fi
     if [[ "$ONLY_IMAGES" == "true" && "$dname" != "gallery" && "$local_dir" == "$DIST_DIR" ]]; then
       recurse=false
     fi
@@ -199,6 +202,9 @@ upload_dir() {
     
     local recurse=true
     if [[ "$dname" == "gallery" && "$SKIP_IMAGES" == "true" ]]; then
+      recurse=false
+    fi
+    if [[ "$dname" == "unzipped_raw" ]]; then
       recurse=false
     fi
     if [[ "$ONLY_IMAGES" == "true" && "$dname" != "gallery" && "$local_dir" == "$DIST_DIR" ]]; then

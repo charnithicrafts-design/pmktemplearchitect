@@ -6,23 +6,64 @@
           <span class="logo-mark">PMK</span>
           <h1>Image Curation Dashboard</h1>
         </div>
+        
+        <!-- Toggle Mode -->
+        <div class="mode-tabs">
+          <button 
+            class="tab-btn" 
+            :class="{ active: mode === 'new' }"
+            @click="setMode('new')"
+          >
+            📂 Curate New ({{ newImages.length }})
+          </button>
+          <button 
+            class="tab-btn" 
+            :class="{ active: mode === 'review' }"
+            @click="setMode('review')"
+          >
+            👁️ Review Gallery ({{ reviewImages.length }})
+          </button>
+        </div>
+
         <NuxtLink to="/gallery" class="btn btn-outline btn-sm">Go to Gallery →</NuxtLink>
       </div>
     </div>
 
     <div class="container main-content">
+      <!-- Mode options for Review -->
+      <div v-if="mode === 'review'" class="review-filters">
+        <span class="filter-label">Filter by Category:</span>
+        <button 
+          v-for="cat in filterCategories" 
+          :key="cat.key" 
+          class="filter-tab"
+          :class="{ active: reviewFilter === cat.key }"
+          @click="setReviewFilter(cat.key)"
+        >
+          {{ cat.label }} ({{ getCategoryCount(cat.key) }})
+        </button>
+      </div>
+
       <!-- Loading state -->
       <div v-if="loading" class="state-card loading-card">
         <div class="spinner" />
-        <p>Loading uncurated images...</p>
+        <p>Loading files...</p>
       </div>
 
-      <!-- Empty state -->
-      <div v-else-if="images.length === 0" class="state-card empty-card">
+      <!-- Empty state for new uploads -->
+      <div v-else-if="mode === 'new' && newImages.length === 0" class="state-card empty-card">
         <span class="empty-icon">🎉</span>
         <h2>All Done!</h2>
         <p>There are no more images to curate in <code>public/unzipped_raw/</code>.</p>
-        <NuxtLink to="/gallery" class="btn btn-primary">View the Live Gallery</NuxtLink>
+        <button class="btn btn-outline" @click="setMode('review')">Review existing gallery images</button>
+      </div>
+
+      <!-- Empty state for review filters -->
+      <div v-else-if="mode === 'review' && filteredReviewImages.length === 0" class="state-card empty-card">
+        <span class="empty-icon">📂</span>
+        <h2>Empty Category</h2>
+        <p>No images found matching category filter <strong>"{{ reviewFilter }}"</strong>.</p>
+        <button class="btn btn-outline" @click="setReviewFilter('all')">Show all categories</button>
       </div>
 
       <!-- Curator Workspace -->
@@ -31,8 +72,8 @@
         <div class="visual-panel">
           <div class="image-wrapper">
             <img 
-              :src="`/unzipped_raw/${currentImage}`" 
-              :alt="currentImage" 
+              :src="currentImageSrc" 
+              :alt="currentImageName" 
               class="uncurated-image"
               @load="imageLoaded = true"
             />
@@ -41,21 +82,37 @@
             </div>
           </div>
           <div class="image-meta">
-            <span class="filename">{{ currentImage }}</span>
-            <span class="progress-indicator">Image {{ currentIndex + 1 }} of {{ images.length }}</span>
+            <span class="filename" :title="currentImageName">{{ currentImageName }}</span>
+            <div class="meta-right">
+              <span v-if="mode === 'review'" class="current-cat-badge">Current: {{ currentItemCategory }}</span>
+              <span class="progress-indicator">Image {{ currentIndex + 1 }} of {{ totalImagesCount }}</span>
+            </div>
+          </div>
+          
+          <!-- Navigation in Review Mode -->
+          <div v-if="mode === 'review'" class="review-nav">
+            <button class="btn btn-outline btn-xs" @click="prevItem" :disabled="currentIndex === 0">◀ Prev</button>
+            <span class="nav-count">{{ currentIndex + 1 }} / {{ totalImagesCount }}</span>
+            <button class="btn btn-outline btn-xs" @click="nextItem" :disabled="currentIndex === totalImagesCount - 1">Next ▶</button>
           </div>
         </div>
 
         <!-- Control Panel -->
         <div class="control-panel">
-          <h2>Select Category</h2>
-          <p class="instruction">Choose the appropriate category for this image. You can also use the keyboard shortcuts (1-4) for rapid curation.</p>
+          <h2>{{ mode === 'new' ? 'Select Category' : 'Change Category' }}</h2>
+          <p class="instruction">
+            {{ mode === 'new' 
+              ? 'Choose a category to move this raw file into the public gallery.' 
+              : 'Update the category for this live gallery image. The change will save instantly.' 
+            }}
+          </p>
 
           <div class="button-stack">
             <button 
               class="btn-curate btn-temple" 
+              :class="{ highlighted: currentItemCategory === 'temple' }"
               :disabled="processing"
-              @click="curate('temple')"
+              @click="handleCategoryAction('temple')"
             >
               <span class="key-hint">1</span>
               <span class="label">🕌 Temple Architecture</span>
@@ -63,8 +120,9 @@
 
             <button 
               class="btn-curate btn-idol" 
+              :class="{ highlighted: currentItemCategory === 'idol' }"
               :disabled="processing"
-              @click="curate('idol')"
+              @click="handleCategoryAction('idol')"
             >
               <span class="key-hint">2</span>
               <span class="label">🗿 Idol / Sculpture</span>
@@ -72,8 +130,9 @@
 
             <button 
               class="btn-curate btn-detail" 
+              :class="{ highlighted: currentItemCategory === 'detail' }"
               :disabled="processing"
-              @click="curate('detail')"
+              @click="handleCategoryAction('detail')"
             >
               <span class="key-hint">3</span>
               <span class="label">🔍 Fine Stone Details</span>
@@ -81,8 +140,9 @@
 
             <button 
               class="btn-curate btn-social" 
+              :class="{ highlighted: currentItemCategory === 'social' }"
               :disabled="processing"
-              @click="curate('social')"
+              @click="handleCategoryAction('social')"
             >
               <span class="key-hint">4</span>
               <span class="label">🎉 Events & Social</span>
@@ -93,10 +153,10 @@
             <button 
               class="btn-curate btn-skip" 
               :disabled="processing"
-              @click="curate('skip')"
+              @click="handleCategoryAction('skip')"
             >
               <span class="key-hint">5</span>
-              <span class="label">🗑️ Skip / Delete Image</span>
+              <span class="label">🗑️ {{ mode === 'new' ? 'Skip / Delete Image' : 'Remove from Gallery' }}</span>
             </button>
           </div>
 
@@ -108,7 +168,7 @@
               <div class="shortcut-item"><span>2</span> Idol</div>
               <div class="shortcut-item"><span>3</span> Detail</div>
               <div class="shortcut-item"><span>4</span> Social</div>
-              <div class="shortcut-item"><span>5</span> / <span>Del</span> Skip</div>
+              <div class="shortcut-item"><span>5</span> / <span>Del</span> Delete</div>
             </div>
           </div>
         </div>
@@ -120,89 +180,226 @@
 <script setup>
 useHead({ title: 'Curation | P.M.K. Temple Architect' })
 
-const images = ref([])
-const currentIndex = ref(0)
+const mode = ref('new') // 'new' or 'review'
 const loading = ref(true)
 const processing = ref(false)
 const imageLoaded = ref(false)
 
-const currentImage = computed(() => images.value[currentIndex.value] || '')
+// New uploads state
+const newImages = ref([])
+const newIndex = ref(0)
 
-// Fetch list of uncurated images
-async function fetchImages() {
+// Review gallery state
+const reviewImages = ref([])
+const reviewIndex = ref(0)
+const reviewFilter = ref('all')
+
+const filterCategories = [
+  { key: 'all', label: 'All' },
+  { key: 'temple', label: 'Temples' },
+  { key: 'idol', label: 'Idols' },
+  { key: 'detail', label: 'Details' },
+  { key: 'social', label: 'Social' }
+]
+
+// Computed getters based on current mode
+const filteredReviewImages = computed(() => {
+  if (reviewFilter.value === 'all') return reviewImages.value
+  return reviewImages.value.filter(img => img.cat === reviewFilter.value)
+})
+
+const currentIndex = computed({
+  get() {
+    return mode.value === 'new' ? newIndex.value : reviewIndex.value
+  },
+  set(val) {
+    if (mode.value === 'new') {
+      newIndex.value = val
+    } else {
+      reviewIndex.value = val
+    }
+  }
+})
+
+const totalImagesCount = computed(() => {
+  return mode.value === 'new' ? newImages.value.length : filteredReviewImages.value.length
+})
+
+const currentImageName = computed(() => {
+  if (mode.value === 'new') {
+    return newImages.value[newIndex.value] || ''
+  } else {
+    const item = filteredReviewImages.value[reviewIndex.value]
+    return item ? item.src.split('/').pop() : ''
+  }
+})
+
+const currentImageSrc = computed(() => {
+  if (mode.value === 'new') {
+    return currentImageName.value ? `/unzipped_raw/${currentImageName.value}` : ''
+  } else {
+    const item = filteredReviewImages.value[reviewIndex.value]
+    return item ? item.src : ''
+  }
+})
+
+const currentItemCategory = computed(() => {
+  if (mode.value === 'new') return ''
+  const item = filteredReviewImages.value[reviewIndex.value]
+  return item ? item.cat : ''
+})
+
+// Lifecycle load
+async function loadAllData() {
   loading.value = true
   try {
-    const data = await $fetch('/api/uncurated')
-    images.value = data
-    currentIndex.value = 0
+    const [uncurated, galleryMeta] = await Promise.all([
+      $fetch('/api/uncurated'),
+      $fetch('/gallery_meta.json').catch(() => [])
+    ])
+    newImages.value = uncurated
+    reviewImages.value = galleryMeta
+    newIndex.value = 0
+    reviewIndex.value = 0
     imageLoaded.value = false
   } catch (err) {
-    console.error('Failed to load uncurated images:', err)
+    console.error('Error loading data:', err)
   } finally {
     loading.value = false
   }
 }
 
-// Curate the current image
-async function curate(category) {
-  if (processing.value || !currentImage.value) return
-  
-  processing.value = true
-  imageLoaded.value = false
-  
-  try {
-    const res = await $fetch('/api/curate', {
-      method: 'POST',
-      body: {
-        filename: currentImage.value,
-        category: category
-      }
-    })
+// Category counters for Review mode
+function getCategoryCount(catKey) {
+  if (catKey === 'all') return reviewImages.value.length
+  return reviewImages.value.filter(img => img.cat === catKey).length
+}
 
-    if (res.success) {
-      // Remove the item from list locally
-      images.value.splice(currentIndex.value, 1)
-      
-      // If we ran out of images, reset index
-      if (currentIndex.value >= images.value.length) {
-        currentIndex.value = Math.max(0, images.value.length - 1)
-      }
-    }
-  } catch (err) {
-    console.error('Failed to curate image:', err)
-    alert(`Error: ${err.statusMessage || 'Something went wrong'}`)
-  } finally {
-    processing.value = false
+function setMode(newMode) {
+  mode.value = newMode
+  currentIndex.value = 0
+  imageLoaded.value = false
+}
+
+function setReviewFilter(filterKey) {
+  reviewFilter.value = filterKey
+  reviewIndex.value = 0
+  imageLoaded.value = false
+}
+
+function prevItem() {
+  if (currentIndex.value > 0) {
+    currentIndex.value--
+    imageLoaded.value = false
   }
 }
 
-// Keyboard navigation listener
+function nextItem() {
+  if (currentIndex.value < totalImagesCount.value - 1) {
+    currentIndex.value++
+    imageLoaded.value = false
+  }
+}
+
+// Route Curation Action
+async function handleCategoryAction(category) {
+  if (processing.value || !currentImageName.value) return
+  
+  processing.value = true
+  imageLoaded.value = false
+
+  if (mode.value === 'new') {
+    // Process new image
+    try {
+      const res = await $fetch('/api/curate', {
+        method: 'POST',
+        body: { filename: currentImageName.value, category }
+      })
+      if (res.success) {
+        // Remove from list
+        newImages.value.splice(newIndex.value, 1)
+        // Add to review list locally
+        if (category !== 'skip') {
+          reviewImages.value.push(res.item)
+        }
+        adjustIndexAfterRemoval()
+      }
+    } catch (err) {
+      alert(`Error curating file: ${err.statusMessage || err.message}`)
+    } finally {
+      processing.value = false
+    }
+  } else {
+    // Recategorize or Delete existing image
+    const item = filteredReviewImages.value[reviewIndex.value]
+    if (!item) return
+
+    const targetCategory = category === 'skip' ? 'delete' : category
+
+    try {
+      const res = await $fetch('/api/recategorize', {
+        method: 'POST',
+        body: { src: item.src, category: targetCategory }
+      })
+      if (res.success) {
+        const globalIndex = reviewImages.value.findIndex(img => img.src === item.src)
+        if (globalIndex !== -1) {
+          if (targetCategory === 'delete') {
+            reviewImages.value.splice(globalIndex, 1)
+            adjustIndexAfterRemoval()
+          } else {
+            reviewImages.value[globalIndex].cat = targetCategory
+            // Go to next item automatically
+            nextItem()
+          }
+        }
+      }
+    } catch (err) {
+      alert(`Error updating file: ${err.statusMessage || err.message}`)
+    } finally {
+      processing.value = false
+    }
+  }
+}
+
+function adjustIndexAfterRemoval() {
+  if (currentIndex.value >= totalImagesCount.value) {
+    currentIndex.value = Math.max(0, totalImagesCount.value - 1)
+  }
+}
+
 function handleKeyDown(e) {
-  if (loading.value || images.value.length === 0 || processing.value) return
+  if (loading.value || totalImagesCount.value === 0 || processing.value) return
 
   switch (e.key) {
     case '1':
-      curate('temple')
+      handleCategoryAction('temple')
       break
     case '2':
-      curate('idol')
+      handleCategoryAction('idol')
       break
     case '3':
-      curate('detail')
+      handleCategoryAction('detail')
       break
     case '4':
-      curate('social')
+      handleCategoryAction('social')
       break
     case '5':
     case 'Delete':
     case 'Backspace':
-      curate('skip')
+      handleCategoryAction('skip')
+      break
+    case 'ArrowLeft':
+      if (mode.value === 'review') prevItem()
+      break
+    case 'ArrowRight':
+      if (mode.value === 'review') nextItem()
       break
   }
 }
 
 onMounted(() => {
-  fetchImages()
+  loadAllData()
   window.addEventListener('keydown', handleKeyDown)
 })
 
@@ -231,6 +428,7 @@ onUnmounted(() => {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  gap: 1.5rem;
 }
 .brand {
   display: flex;
@@ -245,8 +443,67 @@ onUnmounted(() => {
   margin: 0;
 }
 
+/* Mode Switcher Tabs */
+.mode-tabs {
+  display: flex;
+  background: rgba(255,255,255,0.03);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 0.25rem;
+}
+.tab-btn {
+  background: transparent;
+  border: none;
+  color: var(--text-muted);
+  font-family: var(--font-sans);
+  font-size: 0.85rem;
+  font-weight: 500;
+  padding: 0.5rem 1rem;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+.tab-btn.active {
+  background: var(--gold-muted);
+  color: var(--gold);
+  border: 1px solid rgba(212,175,55,0.2);
+}
+
+/* Review Filters */
+.review-filters {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 1rem;
+  margin-bottom: 2rem;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+.filter-label {
+  font-size: 0.9rem;
+  color: var(--text-muted);
+  font-weight: 500;
+}
+.filter-tab {
+  background: rgba(255,255,255,0.02);
+  border: 1px solid var(--border);
+  color: var(--text-muted);
+  padding: 0.4rem 0.9rem;
+  border-radius: 30px;
+  font-size: 0.8rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+.filter-tab.active {
+  background: var(--gold-muted);
+  border-color: var(--gold);
+  color: var(--gold);
+}
+
 .main-content {
-  margin-top: 3rem;
+  margin-top: 2rem;
 }
 
 /* State cards */
@@ -285,6 +542,9 @@ onUnmounted(() => {
 .empty-card p {
   color: var(--text-muted);
   margin-bottom: 2rem;
+}
+.empty-card .btn {
+  margin-top: 0.5rem;
 }
 
 /* Workspace layout */
@@ -342,11 +602,44 @@ onUnmounted(() => {
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
-  max-width: 60%;
+  max-width: 50%;
+}
+.meta-right {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+.current-cat-badge {
+  background: rgba(255,255,255,0.05);
+  border: 1px solid var(--border);
+  padding: 0.25rem 0.55rem;
+  border-radius: 6px;
+  font-size: 0.75rem;
+  text-transform: capitalize;
+  color: var(--text-muted);
 }
 .progress-indicator {
   color: var(--gold);
   font-weight: 500;
+}
+
+/* Review Navigation Row */
+.review-nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-top: 1px solid var(--border);
+  padding-top: 1rem;
+  margin-top: 0.5rem;
+}
+.nav-count {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+}
+.btn-xs {
+  font-size: 0.75rem;
+  padding: 0.35rem 0.75rem;
+  border-radius: 6px;
 }
 
 /* Control Panel */
@@ -390,6 +683,10 @@ onUnmounted(() => {
   cursor: pointer;
   transition: all 0.2s ease;
   outline: none;
+}
+.btn-curate.highlighted {
+  border-color: rgba(212,175,55,0.4);
+  background: rgba(212,175,55,0.08);
 }
 .key-hint {
   display: flex;

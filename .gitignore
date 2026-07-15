@@ -1,0 +1,25 @@
+# ── Nuxt Project (moodboard) ───────────────────────────
+moodboard/node_modules/
+moodboard/.nuxt/
+moodboard/.output/
+moodboard/dist/
+
+# Exclude original unprocessed/zip files from Git to keep repo small
+moodboard/WhatsApp Image*
+moodboard/WhatsApp Unknown*
+
+# ── Deploy secrets ─────────────────────────────────────
+moodboard/.deploy.env
+moodboard/.env
+moodboard/.env.*
+moodboard/!*.env.example
+
+# ── OS / Editor Junk ──────────────────────────────────
+.DS_Store
+Thumbs.db
+*.swp
+*.swo
+.vscode/
+.idea/
+*.log
+npm-debug.log*

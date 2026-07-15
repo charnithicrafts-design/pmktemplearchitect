@@ -2,6 +2,10 @@
 export default defineNuxtConfig({
   devtools: { enabled: true },
 
+  experimental: {
+    appManifest: false
+  },
+
   // Static site generation — outputs to .output/public for FTP hosting
   nitro: { preset: 'static' },
   ssr: true,

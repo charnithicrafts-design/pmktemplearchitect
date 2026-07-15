@@ -174,6 +174,14 @@
         </div>
       </div>
     </div>
+
+    <!-- Success Toast Message -->
+    <Transition name="toast">
+      <div v-if="toast.show" class="toast-notification" :class="toast.type">
+        <span class="toast-icon">{{ toast.type === 'success' ? '✓' : 'ℹ' }}</span>
+        <span class="toast-msg">{{ toast.message }}</span>
+      </div>
+    </Transition>
   </div>
 </template>
 
@@ -184,6 +192,9 @@ const mode = ref('new') // 'new' or 'review'
 const loading = ref(true)
 const processing = ref(false)
 const imageLoaded = ref(false)
+
+// Toast notification state
+const toast = ref({ show: false, message: '', type: 'success' })
 
 // New uploads state
 const newImages = ref([])
@@ -249,6 +260,24 @@ const currentItemCategory = computed(() => {
   return item ? item.cat : ''
 })
 
+// Trigger a toast notification
+function showToast(message, type = 'success') {
+  toast.value = { show: true, message, type }
+  setTimeout(() => {
+    toast.value.show = false
+  }, 1800)
+}
+
+function getCategoryLabel(cat) {
+  const labels = {
+    temple: 'Temple Architecture',
+    idol: 'Idol / Sculpture',
+    detail: 'Fine Stone Details',
+    social: 'Events & Social'
+  }
+  return labels[cat] || cat
+}
+
 // Lifecycle load
 async function loadAllData() {
   loading.value = true
@@ -306,7 +335,6 @@ async function handleCategoryAction(category) {
   if (processing.value || !currentImageName.value) return
   
   processing.value = true
-  imageLoaded.value = false
 
   if (mode.value === 'new') {
     // Process new image
@@ -321,18 +349,31 @@ async function handleCategoryAction(category) {
         // Add to review list locally
         if (category !== 'skip') {
           reviewImages.value.push(res.item)
+          showToast(`✓ Curated as: ${getCategoryLabel(category)}`, 'success')
+        } else {
+          showToast('🗑️ Deleted file from raw uploads', 'info')
         }
-        adjustIndexAfterRemoval()
+        
+        // Brief delay before sliding to next image to feel "in harmony"
+        setTimeout(() => {
+          imageLoaded.value = false
+          adjustIndexAfterRemoval()
+          processing.value = false
+        }, 400)
+      } else {
+        processing.value = false
       }
     } catch (err) {
-      alert(`Error curating file: ${err.statusMessage || err.message}`)
-    } finally {
       processing.value = false
+      alert(`Error curating file: ${err.statusMessage || err.message}`)
     }
   } else {
     // Recategorize or Delete existing image
     const item = filteredReviewImages.value[reviewIndex.value]
-    if (!item) return
+    if (!item) {
+      processing.value = false
+      return
+    }
 
     const targetCategory = category === 'skip' ? 'delete' : category
 
@@ -346,18 +387,34 @@ async function handleCategoryAction(category) {
         if (globalIndex !== -1) {
           if (targetCategory === 'delete') {
             reviewImages.value.splice(globalIndex, 1)
-            adjustIndexAfterRemoval()
+            showToast('🗑️ Removed image from gallery', 'info')
+            
+            setTimeout(() => {
+              imageLoaded.value = false
+              adjustIndexAfterRemoval()
+              processing.value = false
+            }, 400)
           } else {
+            // Update in place locally
             reviewImages.value[globalIndex].cat = targetCategory
-            // Go to next item automatically
-            nextItem()
+            showToast(`✓ Updated to: ${getCategoryLabel(targetCategory)}`, 'success')
+            
+            // Wait 600ms so they see the highlighted gold border update before auto-advancing
+            setTimeout(() => {
+              imageLoaded.value = false
+              nextItem()
+              processing.value = false
+            }, 600)
           }
+        } else {
+          processing.value = false
         }
+      } else {
+        processing.value = false
       }
     } catch (err) {
-      alert(`Error updating file: ${err.statusMessage || err.message}`)
-    } finally {
       processing.value = false
+      alert(`Error updating file: ${err.statusMessage || err.message}`)
     }
   }
 }
@@ -610,13 +667,13 @@ onUnmounted(() => {
   gap: 1rem;
 }
 .current-cat-badge {
-  background: rgba(255,255,255,0.05);
-  border: 1px solid var(--border);
+  background: rgba(212,175,55,0.1);
+  border: 1px solid rgba(212,175,55,0.3);
   padding: 0.25rem 0.55rem;
   border-radius: 6px;
   font-size: 0.75rem;
   text-transform: capitalize;
-  color: var(--text-muted);
+  color: var(--gold-light);
 }
 .progress-indicator {
   color: var(--gold);
@@ -681,13 +738,23 @@ onUnmounted(() => {
   font-size: 1rem;
   font-weight: 500;
   cursor: pointer;
-  transition: all 0.2s ease;
+  transition: all 0.2s ease, transform 0.1s ease;
   outline: none;
 }
-.btn-curate.highlighted {
-  border-color: rgba(212,175,55,0.4);
-  background: rgba(212,175,55,0.08);
+.btn-curate:active {
+  transform: scale(0.98);
 }
+.btn-curate.highlighted {
+  border-color: var(--gold);
+  background: rgba(212,175,55,0.08);
+  box-shadow: 0 0 10px rgba(212,175,55,0.15);
+}
+.btn-curate.highlighted .key-hint {
+  border-color: var(--gold);
+  color: var(--gold);
+  background: var(--gold-muted);
+}
+
 .key-hint {
   display: flex;
   align-items: center;
@@ -809,6 +876,52 @@ onUnmounted(() => {
   border-radius: 4px;
   font-family: monospace;
   font-weight: bold;
+}
+
+/* Toast notification styling */
+.toast-notification {
+  position: fixed;
+  bottom: 2rem;
+  right: 2rem;
+  padding: 0.85rem 1.25rem;
+  border-radius: 10px;
+  font-size: 0.9rem;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  z-index: 1000;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.5);
+  transition: all 0.3s ease;
+  backdrop-filter: blur(10px);
+}
+.toast-notification.success {
+  background: rgba(16,185,129,0.1);
+  border: 1px solid rgba(16,185,129,0.4);
+  color: rgb(52,211,153);
+}
+.toast-notification.info {
+  background: rgba(239,68,68,0.15);
+  border: 1px solid rgba(239,68,68,0.4);
+  color: #fca5a5;
+}
+.toast-icon {
+  font-size: 1.1rem;
+  font-weight: bold;
+}
+
+/* Toast animations */
+.toast-enter-active,
+.toast-leave-active {
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.toast-enter-from {
+  opacity: 0;
+  transform: translateY(20px) scale(0.95);
+}
+.toast-leave-to {
+  opacity: 0;
+  transform: translateY(-10px) scale(0.95);
 }
 
 @media (max-width: 1024px) {

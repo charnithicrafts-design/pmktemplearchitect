@@ -60,25 +60,25 @@ useHead({ title: 'Services | P.M.K. Temple Architect' })
 const services = [
   {
     title: 'South Indian Style Temples',
-    image: '/gallery/img_001.jpeg',
+    image: '/gallery/img_002.jpeg',
     desc: 'We are masters of Dravidian architecture — the towering Gopurams, intricate mandapas, and elaborately carved pillars that define South Indian temple heritage.',
     features: ['Towering Gopuram construction', 'Multi-tiered Vimanam design', 'Dravidian pillar carvings', 'Agama-compliant sanctum sanctorum', 'Colour and iconographic detailing'],
   },
   {
     title: 'North Indian Style Temples',
-    image: '/gallery/img_015.jpeg',
+    image: '/gallery/img_014.jpeg',
     desc: 'Our team crafts majestic Nagara-style temples featuring soaring Shikharas, beautifully carved mandapas, and devotional stonework that captures the essence of Northern sacred architecture.',
     features: ['Nagara-style Shikhara', 'Ornate Mandapa construction', 'Amalaka and Kalasha finials', 'Sandstone and granite carving', 'Cross-regional design consultation'],
   },
   {
     title: 'Idol & Sculpture Creation',
-    image: '/gallery/img_036.jpeg',
+    image: '/gallery/img_006.jpeg',
     desc: 'Each deity we sculpt is carved from premium quality stone, following precise iconographic proportions defined in Agamic texts. These are not mere statues — they are living vessels of the divine.',
     features: ['Traditional iconographic proportions', 'Premium granite and marble carving', 'From miniature vigrahas to monumental idols', 'Panchadhatu metal work consultation', 'Pratishtha ceremony coordination'],
   },
   {
     title: 'Temple Contracting & Renovation',
-    image: '/gallery/img_057.jpeg',
+    image: '/gallery/img_012.jpeg',
     desc: 'We manage complete temple construction projects end-to-end — from site planning and material procurement to construction supervision and final consecration.',
     features: ['Complete project management', 'Material sourcing and quality control', 'Licensed structural work', 'Temple renovation and restoration', 'On-site Sthapathi supervision'],
   },

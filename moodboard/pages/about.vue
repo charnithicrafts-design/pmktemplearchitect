@@ -26,7 +26,7 @@
           <blockquote class="reveal reveal-delay-3">"Agama Vithipadi Seithu Tharapadam" — Delivered according to the sacred Agama codes</blockquote>
         </div>
         <div class="story-images reveal reveal-delay-2">
-          <img src="/gallery/img_001.jpeg" alt="PMK Temple Work" />
+          <img src="/gallery/img_002.jpeg" alt="PMK Temple Work" />
         </div>
       </div>
     </section>
@@ -72,7 +72,7 @@
     <section class="featured-section section-pad dark-section">
       <div class="container featured-inner">
         <div class="featured-img reveal">
-          <img src="/gallery/img_015.jpeg" alt="Srirangam Agopila Math" />
+          <img src="/gallery/img_014.jpeg" alt="Srirangam Agopila Math" />
         </div>
         <div class="featured-text">
           <span class="section-label reveal">Landmark Project</span>

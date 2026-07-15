@@ -2,7 +2,7 @@
   <div>
     <section class="page-hero">
       <div class="page-hero-bg">
-        <img src="/gallery/img_051.jpeg" alt="Contact PMK" />
+        <img src="/gallery/img_014.jpeg" alt="Contact PMK" />
         <div class="page-hero-overlay" />
       </div>
       <div class="container page-hero-content">

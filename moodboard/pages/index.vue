@@ -3,7 +3,7 @@
     <!-- HERO -->
     <section class="hero">
       <div class="hero-bg">
-        <img src="/gallery/img_014.jpeg" alt="PMK Temple Architecture" class="hero-img" />
+        <img src="/gallery/img_001.jpeg" alt="PMK Temple Architecture" class="hero-img" />
         <div class="hero-overlay" />
       </div>
       <div class="hero-content container">
@@ -36,7 +36,7 @@
     <section class="intro section-pad">
       <div class="container intro-grid">
         <div class="intro-images reveal">
-          <img src="/gallery/img_002.jpeg" alt="Temple Work" class="intro-img-main" />
+          <img src="/gallery/img_001.jpeg" alt="Temple Work" class="intro-img-main" />
           <img src="/gallery/img_004.jpeg" alt="Idol Work" class="intro-img-side" />
         </div>
         <div class="intro-text">
@@ -98,7 +98,7 @@
           <NuxtLink to="/gallery" class="btn btn-outline">See the Project</NuxtLink>
         </div>
         <div class="badge-img reveal reveal-delay-2">
-          <img src="/gallery/img_014.jpeg" alt="Srirangam Agopila Math" />
+          <img src="/gallery/img_002.jpeg" alt="Srirangam Agopila Math" />
         </div>
       </div>
     </section>

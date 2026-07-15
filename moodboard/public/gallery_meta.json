@@ -1,43 +1,78 @@
 [
   {
+    "src": "/gallery/img_001.jpeg",
+    "cat": "temple",
+    "alt": "PMK Temple Work 1"
+  },
+  {
     "src": "/gallery/img_002.jpeg",
     "cat": "temple",
     "alt": "PMK Temple Work 2"
   },
   {
+    "src": "/gallery/img_003.jpeg",
+    "cat": "idol",
+    "alt": "PMK Temple Work 3"
+  },
+  {
     "src": "/gallery/img_004.jpeg",
-    "cat": "temple",
+    "cat": "idol",
     "alt": "PMK Temple Work 4"
   },
   {
-    "src": "/gallery/img_006.jpeg",
+    "src": "/gallery/img_005.jpeg",
     "cat": "idol",
+    "alt": "PMK Temple Work 5"
+  },
+  {
+    "src": "/gallery/img_006.jpeg",
+    "cat": "temple",
     "alt": "PMK Temple Work 6"
   },
   {
     "src": "/gallery/img_007.jpeg",
-    "cat": "idol",
+    "cat": "temple",
     "alt": "PMK Temple Work 7"
   },
   {
     "src": "/gallery/img_008.jpeg",
-    "cat": "idol",
+    "cat": "social",
     "alt": "PMK Temple Work 8"
   },
   {
+    "src": "/gallery/img_009.jpeg",
+    "cat": "social",
+    "alt": "PMK Temple Work 9"
+  },
+  {
+    "src": "/gallery/img_010.jpeg",
+    "cat": "social",
+    "alt": "PMK Temple Work 10"
+  },
+  {
+    "src": "/gallery/img_011.jpeg",
+    "cat": "social",
+    "alt": "PMK Temple Work 11"
+  },
+  {
     "src": "/gallery/img_012.jpeg",
-    "cat": "temple",
+    "cat": "social",
     "alt": "PMK Temple Work 12"
   },
   {
     "src": "/gallery/img_013.jpeg",
-    "cat": "temple",
+    "cat": "social",
     "alt": "PMK Temple Work 13"
   },
   {
     "src": "/gallery/img_014.jpeg",
-    "cat": "temple",
+    "cat": "social",
     "alt": "PMK Temple Work 14"
+  },
+  {
+    "src": "/gallery/img_015.jpeg",
+    "cat": "idol",
+    "alt": "PMK Temple Work 15"
   },
   {
     "src": "/gallery/img_016.jpeg",
@@ -45,8 +80,33 @@
     "alt": "PMK Temple Work 16"
   },
   {
-    "src": "/gallery/img_022.jpeg",
+    "src": "/gallery/img_017.jpeg",
     "cat": "social",
+    "alt": "PMK Temple Work 17"
+  },
+  {
+    "src": "/gallery/img_018.jpeg",
+    "cat": "idol",
+    "alt": "PMK Temple Work 18"
+  },
+  {
+    "src": "/gallery/img_019.jpeg",
+    "cat": "temple",
+    "alt": "PMK Temple Work 19"
+  },
+  {
+    "src": "/gallery/img_020.jpeg",
+    "cat": "idol",
+    "alt": "PMK Temple Work 20"
+  },
+  {
+    "src": "/gallery/img_021.jpeg",
+    "cat": "idol",
+    "alt": "PMK Temple Work 21"
+  },
+  {
+    "src": "/gallery/img_022.jpeg",
+    "cat": "idol",
     "alt": "PMK Temple Work 22"
   },
   {
@@ -55,28 +115,73 @@
     "alt": "PMK Temple Work 23"
   },
   {
-    "src": "/gallery/img_027.jpeg",
+    "src": "/gallery/img_024.jpeg",
     "cat": "social",
+    "alt": "PMK Temple Work 24"
+  },
+  {
+    "src": "/gallery/img_025.jpeg",
+    "cat": "social",
+    "alt": "PMK Temple Work 25"
+  },
+  {
+    "src": "/gallery/img_026.jpeg",
+    "cat": "social",
+    "alt": "PMK Temple Work 26"
+  },
+  {
+    "src": "/gallery/img_027.jpeg",
+    "cat": "idol",
     "alt": "PMK Temple Work 27"
   },
   {
+    "src": "/gallery/img_028.jpeg",
+    "cat": "idol",
+    "alt": "PMK Temple Work 28"
+  },
+  {
     "src": "/gallery/img_029.jpeg",
-    "cat": "social",
+    "cat": "idol",
     "alt": "PMK Temple Work 29"
   },
   {
     "src": "/gallery/img_030.jpeg",
-    "cat": "social",
+    "cat": "idol",
     "alt": "PMK Temple Work 30"
   },
   {
+    "src": "/gallery/img_031.jpeg",
+    "cat": "idol",
+    "alt": "PMK Temple Work 31"
+  },
+  {
+    "src": "/gallery/img_032.jpeg",
+    "cat": "idol",
+    "alt": "PMK Temple Work 32"
+  },
+  {
+    "src": "/gallery/img_033.jpeg",
+    "cat": "idol",
+    "alt": "PMK Temple Work 33"
+  },
+  {
+    "src": "/gallery/img_034.jpeg",
+    "cat": "temple",
+    "alt": "PMK Temple Work 34"
+  },
+  {
     "src": "/gallery/img_035.jpeg",
-    "cat": "social",
+    "cat": "detail",
     "alt": "PMK Temple Work 35"
   },
   {
+    "src": "/gallery/img_036.jpeg",
+    "cat": "temple",
+    "alt": "PMK Temple Work 36"
+  },
+  {
     "src": "/gallery/img_037.jpeg",
-    "cat": "social",
+    "cat": "detail",
     "alt": "PMK Temple Work 37"
   },
   {
@@ -85,13 +190,18 @@
     "alt": "PMK Temple Work 38"
   },
   {
+    "src": "/gallery/img_039.jpeg",
+    "cat": "idol",
+    "alt": "PMK Temple Work 39"
+  },
+  {
     "src": "/gallery/img_040.jpeg",
-    "cat": "social",
+    "cat": "detail",
     "alt": "PMK Temple Work 40"
   },
   {
     "src": "/gallery/img_041.jpeg",
-    "cat": "social",
+    "cat": "detail",
     "alt": "PMK Temple Work 41"
   },
   {
@@ -100,13 +210,28 @@
     "alt": "PMK Temple Work 42"
   },
   {
+    "src": "/gallery/img_043.jpeg",
+    "cat": "idol",
+    "alt": "PMK Temple Work 43"
+  },
+  {
+    "src": "/gallery/img_044.jpeg",
+    "cat": "detail",
+    "alt": "PMK Temple Work 44"
+  },
+  {
+    "src": "/gallery/img_045.jpeg",
+    "cat": "idol",
+    "alt": "PMK Temple Work 45"
+  },
+  {
     "src": "/gallery/img_046.jpeg",
-    "cat": "temple",
+    "cat": "detail",
     "alt": "PMK Temple Work 46"
   },
   {
     "src": "/gallery/img_047.jpeg",
-    "cat": "idol",
+    "cat": "detail",
     "alt": "PMK Temple Work 47"
   },
   {
@@ -115,9 +240,19 @@
     "alt": "PMK Temple Work 48"
   },
   {
+    "src": "/gallery/img_049.jpeg",
+    "cat": "detail",
+    "alt": "PMK Temple Work 49"
+  },
+  {
     "src": "/gallery/img_050.jpeg",
-    "cat": "idol",
+    "cat": "detail",
     "alt": "PMK Temple Work 50"
+  },
+  {
+    "src": "/gallery/img_051.jpeg",
+    "cat": "temple",
+    "alt": "PMK Temple Work 51"
   },
   {
     "src": "/gallery/img_052.jpeg",
@@ -126,18 +261,33 @@
   },
   {
     "src": "/gallery/img_053.jpeg",
-    "cat": "social",
+    "cat": "detail",
     "alt": "PMK Temple Work 53"
   },
   {
+    "src": "/gallery/img_054.jpeg",
+    "cat": "idol",
+    "alt": "PMK Temple Work 54"
+  },
+  {
     "src": "/gallery/img_055.jpeg",
-    "cat": "social",
+    "cat": "detail",
     "alt": "PMK Temple Work 55"
   },
   {
     "src": "/gallery/img_056.jpeg",
-    "cat": "social",
+    "cat": "detail",
     "alt": "PMK Temple Work 56"
+  },
+  {
+    "src": "/gallery/img_057.jpeg",
+    "cat": "idol",
+    "alt": "PMK Temple Work 57"
+  },
+  {
+    "src": "/gallery/img_058.jpeg",
+    "cat": "idol",
+    "alt": "PMK Temple Work 58"
   },
   {
     "src": "/gallery/img_059.jpeg",
@@ -150,113 +300,48 @@
     "alt": "PMK Temple Work 60"
   },
   {
+    "src": "/gallery/img_061.jpeg",
+    "cat": "social",
+    "alt": "PMK Temple Work 61"
+  },
+  {
+    "src": "/gallery/img_062.jpeg",
+    "cat": "social",
+    "alt": "PMK Temple Work 62"
+  },
+  {
+    "src": "/gallery/img_063.jpeg",
+    "cat": "social",
+    "alt": "PMK Temple Work 63"
+  },
+  {
+    "src": "/gallery/img_064.jpeg",
+    "cat": "idol",
+    "alt": "PMK Temple Work 64"
+  },
+  {
+    "src": "/gallery/img_065.jpeg",
+    "cat": "social",
+    "alt": "PMK Temple Work 65"
+  },
+  {
+    "src": "/gallery/img_066.jpeg",
+    "cat": "social",
+    "alt": "PMK Temple Work 66"
+  },
+  {
     "src": "/gallery/img_067.jpeg",
     "cat": "social",
     "alt": "PMK Temple Work 67"
   },
   {
-    "src": "/gallery/img_070.jpeg",
-    "cat": "social",
-    "alt": "PMK Temple Work 70"
-  },
-  {
-    "src": "/gallery/img_072.jpeg",
+    "src": "/gallery/img_068.jpeg",
     "cat": "idol",
-    "alt": "PMK Temple Work 72"
+    "alt": "PMK Temple Work 68"
   },
   {
-    "src": "/gallery/img_073.jpeg",
+    "src": "/gallery/img_069.jpeg",
     "cat": "social",
-    "alt": "PMK Temple Work 73"
-  },
-  {
-    "src": "/gallery/img_074.jpeg",
-    "cat": "social",
-    "alt": "PMK Temple Work 74"
-  },
-  {
-    "src": "/gallery/img_078.jpeg",
-    "cat": "social",
-    "alt": "PMK Temple Work 78"
-  },
-  {
-    "src": "/gallery/img_079.jpeg",
-    "cat": "social",
-    "alt": "PMK Temple Work 79"
-  },
-  {
-    "src": "/gallery/img_080.jpeg",
-    "cat": "social",
-    "alt": "PMK Temple Work 80"
-  },
-  {
-    "src": "/gallery/img_088.jpeg",
-    "cat": "social",
-    "alt": "PMK Temple Work 88"
-  },
-  {
-    "src": "/gallery/img_089.jpeg",
-    "cat": "social",
-    "alt": "PMK Temple Work 89"
-  },
-  {
-    "src": "/gallery/img_092.jpeg",
-    "cat": "social",
-    "alt": "PMK Temple Work 92"
-  },
-  {
-    "src": "/gallery/img_098.jpeg",
-    "cat": "social",
-    "alt": "PMK Temple Work 98"
-  },
-  {
-    "src": "/gallery/img_136.jpeg",
-    "cat": "idol",
-    "alt": "PMK Temple Work 136"
-  },
-  {
-    "src": "/gallery/img_158.jpeg",
-    "cat": "idol",
-    "alt": "PMK Temple Work 158"
-  },
-  {
-    "src": "/gallery/img_160.jpeg",
-    "cat": "temple",
-    "alt": "PMK Temple Work 160"
-  },
-  {
-    "src": "/gallery/img_161.jpeg",
-    "cat": "idol",
-    "alt": "PMK Temple Work 161"
-  },
-  {
-    "src": "/gallery/img_162.jpeg",
-    "cat": "idol",
-    "alt": "PMK Temple Work 162"
-  },
-  {
-    "src": "/gallery/img_163.jpeg",
-    "cat": "temple",
-    "alt": "PMK Temple Work 163"
-  },
-  {
-    "src": "/gallery/img_166.jpeg",
-    "cat": "idol",
-    "alt": "PMK Temple Work 166"
-  },
-  {
-    "src": "/gallery/img_167.jpeg",
-    "cat": "idol",
-    "alt": "PMK Temple Work 167"
-  },
-  {
-    "src": "/gallery/img_168.jpeg",
-    "cat": "idol",
-    "alt": "PMK Temple Work 168"
-  },
-  {
-    "src": "/gallery/img_169.jpeg",
-    "cat": "temple",
-    "alt": "PMK Temple Work 169"
+    "alt": "PMK Temple Work 69"
   }
 ]

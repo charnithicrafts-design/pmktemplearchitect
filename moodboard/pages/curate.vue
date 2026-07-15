@@ -260,6 +260,11 @@ const currentItemCategory = computed(() => {
   return item ? item.cat : ''
 })
 
+// Reset imageLoaded flag synchronously whenever image source changes to prevent spinner race conditions
+watch(currentImageSrc, () => {
+  imageLoaded.value = false
+})
+
 // Trigger a toast notification
 function showToast(message, type = 'success') {
   toast.value = { show: true, message, type }
@@ -290,7 +295,6 @@ async function loadAllData() {
     reviewImages.value = galleryMeta
     newIndex.value = 0
     reviewIndex.value = 0
-    imageLoaded.value = false
   } catch (err) {
     console.error('Error loading data:', err)
   } finally {
@@ -307,26 +311,22 @@ function getCategoryCount(catKey) {
 function setMode(newMode) {
   mode.value = newMode
   currentIndex.value = 0
-  imageLoaded.value = false
 }
 
 function setReviewFilter(filterKey) {
   reviewFilter.value = filterKey
   reviewIndex.value = 0
-  imageLoaded.value = false
 }
 
 function prevItem() {
   if (currentIndex.value > 0) {
     currentIndex.value--
-    imageLoaded.value = false
   }
 }
 
 function nextItem() {
   if (currentIndex.value < totalImagesCount.value - 1) {
     currentIndex.value++
-    imageLoaded.value = false
   }
 }
 
@@ -356,7 +356,6 @@ async function handleCategoryAction(category) {
         
         // Brief delay before sliding to next image to feel "in harmony"
         setTimeout(() => {
-          imageLoaded.value = false
           adjustIndexAfterRemoval()
           processing.value = false
         }, 400)
@@ -390,19 +389,24 @@ async function handleCategoryAction(category) {
             showToast('🗑️ Removed image from gallery', 'info')
             
             setTimeout(() => {
-              imageLoaded.value = false
               adjustIndexAfterRemoval()
               processing.value = false
             }, 400)
           } else {
+            // Check if the item will remain in the filtered view
+            const willRemain = reviewFilter.value === 'all' || reviewFilter.value === targetCategory
+
             // Update in place locally
             reviewImages.value[globalIndex].cat = targetCategory
             showToast(`✓ Updated to: ${getCategoryLabel(targetCategory)}`, 'success')
             
             // Wait 600ms so they see the highlighted gold border update before auto-advancing
             setTimeout(() => {
-              imageLoaded.value = false
-              nextItem()
+              if (willRemain) {
+                nextItem()
+              } else {
+                adjustIndexAfterRemoval()
+              }
               processing.value = false
             }, 600)
           }

@@ -134,14 +134,14 @@ const services = [
 ]
 
 const previewImages = [
-  '/gallery/img_002.jpeg',
-  '/gallery/img_002.jpeg',
-  '/gallery/img_004.jpeg',
-  '/gallery/img_008.jpeg',
-  '/gallery/img_008.jpeg',
-  '/gallery/img_007.jpeg',
-  '/gallery/img_006.jpeg',
-  '/gallery/img_006.jpeg',
+  '/images/services/temple_1.jpeg',
+  '/images/services/temple_2.jpeg',
+  '/images/services/idol_1.jpeg',
+  '/images/services/idol_2.jpeg',
+  '/images/services/idol_3.jpeg',
+  '/images/services/idol_4.jpeg',
+  '/images/services/idol_5.jpeg',
+  '/images/services/idol_6.jpeg',
 ]
 
 onMounted(() => {

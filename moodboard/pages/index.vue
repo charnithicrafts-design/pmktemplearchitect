@@ -3,7 +3,7 @@
     <!-- HERO -->
     <section class="hero">
       <div class="hero-bg">
-        <img src="/gallery/img_001.jpeg" alt="PMK Temple Architecture" class="hero-img" />
+        <img src="/images/hero.jpeg" alt="PMK Temple Architecture" class="hero-img" />
         <div class="hero-overlay" />
       </div>
       <div class="hero-content container">

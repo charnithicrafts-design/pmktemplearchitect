@@ -36,7 +36,7 @@
     <section class="intro section-pad">
       <div class="container intro-grid">
         <div class="intro-images reveal">
-          <img src="/gallery/img_001.jpeg" alt="Temple Work" class="intro-img-main" />
+          <img src="/images/temple_builder.jpeg" alt="Temple Work" class="intro-img-main" />
           <img src="/images/3idols.jpeg" alt="Idol Work" class="intro-img-side" />
         </div>
         <div class="intro-text">

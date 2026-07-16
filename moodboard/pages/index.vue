@@ -334,7 +334,7 @@ blockquote {
   align-items: center;
 }
 .badge-text p { color: var(--text-muted); margin: 1rem 0 2rem; }
-.badge-img img { width: 100%; height: 420px; object-fit: cover; border-radius: var(--radius); box-shadow: var(--shadow-lg); }
+.badge-img img { width: 100%; height: auto; max-height: 450px; object-fit: contain; border-radius: var(--radius); box-shadow: var(--shadow-lg); background: rgba(0,0,0,0.2); }
 
 /* CTA STRIP */
 .cta-strip {
